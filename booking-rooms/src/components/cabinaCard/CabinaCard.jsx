@@ -2,7 +2,7 @@ import React from "react";
 
 const CabinaCard = ({ data }) => {
   return (
-    <div className="py-[10px] px-[10px]  max-w-max gap-5 flex h-[200px] mb-5 shadow-md shadow-gray-400 rounded-md">
+    <div className="py-[10px] px-[10px] relative mt-[20px]  w-full gap-5 flex h-[200px] mb-5 shadow-md shadow-gray-400 rounded-md">
       <div className="flex-[40%]">
         <img
           src={data.image}
@@ -11,7 +11,12 @@ const CabinaCard = ({ data }) => {
         />
       </div>
       <div className="flex-[60%]">
-        <h2 className="font-bold text-orange-600 text-[18px]">{data.name}</h2>
+        <div className="flex justify-between">
+          <h2 className="font-bold text-orange-600 text-[18px]">{data.name}</h2>
+          <p className="text-gray-600 font-bold tracking-wide cursor-pointer">
+            ...
+          </p>
+        </div>
         <p className="my-2 text-gray-500">
           {data.description.slice(0, 150)}...
         </p>
