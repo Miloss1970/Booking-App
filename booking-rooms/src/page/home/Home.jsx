@@ -3,66 +3,55 @@ import { fetchData } from "../../service/cabine";
 import CabinaCard from "../../components/cabinaCard/CabinaCard";
 import Modal from "../../components/modal/Modal";
 import CabineForm from "../../components/cabineForm/CabineForm";
-import { RiArrowUpDownLine } from "react-icons/ri";
 
 const Home = () => {
   const [cabines, setCabines] = useState([]);
   const [show, setShow] = useState(false);
-  const [available, setAvailable] = useState(false);
-  const [sortByName, setSortByName] = useState({
-    name: false,
-    nameDescending: false,
+  const [fetchParams, setFetchParams] = useState({
+    available: "",
+    sortOption: "",
   });
 
-  const [sortByPrice, setSortByPrice] = useState({
-    priceme: false,
-    priceDescending: false,
-  });
-
-  const nameSorting = () => {
-    setSortByName({
-      name: true,
-      nameDescending: !sortByName.nameDescending,
-    });
-  };
-
-  const priceSorting = () => {
-    setSortByPrice({
-      price: true,
-      priceDescending: !sortByPrice.priceDescending,
-    });
+  const handleFetchParamsChange = (event) => {
+    const { name, value } = event.target;
+    setFetchParams((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   useEffect(() => {
-    fetchData(available, sortByName, sortByPrice).then((res) => {
-      console.log(res);
-      setCabines(res);
-    });
-  }, [available, sortByName, sortByPrice]);
+    const fetchDataAsync = async () => {
+      const data = await fetchData(fetchParams);
+      setCabines(data);
+    };
+
+    fetchDataAsync();
+  }, [fetchParams]);
 
   return (
-    <div className="px-[100px]">
-      <div className="flex justify-end gap-[30px] mb-[100px]">
-        <label className="flex gap-2 items-center">
-          <input
-            type="checkbox"
-            checked={available}
-            onChange={() => setAvailable(!available)}
-          />
-          Available
-        </label>
-        <p
-          onClick={nameSorting}
-          className="flex gap-2 items-center cursor-pointer"
+    <div>
+      <div className="flex justify-end gap-[30px] my-[30px]">
+        <select
+          name="available"
+          onChange={handleFetchParamsChange}
+          value={fetchParams.available}
         >
-          Name <RiArrowUpDownLine />
-        </p>
-        <p
-          onClick={priceSorting}
-          className="flex gap-2 items-center cursor-pointer"
+          <option value="">Filter by</option>
+          <option value="all">All</option>
+          <option value="available">Available</option>
+        </select>
+        <select
+          name="sortOption"
+          onChange={handleFetchParamsChange}
+          value={fetchParams.sortOption}
         >
-          Price <RiArrowUpDownLine />
-        </p>
+          <option value="">Sort by</option>
+          <option value="nameAsc">Name A-Z</option>
+          <option value="nameDesc">Name Z-A</option>
+          <option value="priceAsc">Price Low to High</option>
+          <option value="priceDesc">Price High to Low</option>
+        </select>
       </div>
       {cabines?.map((cabine) => (
         <CabinaCard key={cabine.id} data={cabine} />
