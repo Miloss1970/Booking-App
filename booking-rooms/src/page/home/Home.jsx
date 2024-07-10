@@ -3,10 +3,14 @@ import { fetchData } from "../../service/cabine";
 import CabinaCard from "../../components/cabinaCard/CabinaCard";
 import Modal from "../../components/modal/Modal";
 import CabineForm from "../../components/cabineForm/CabineForm";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
 
 const Home = () => {
-  const [cabines, setCabines] = useState([]);
   const [show, setShow] = useState(false);
+  const cabines = useSelector(getAllCabines);
+  const dispatch = useDispatch();
+
   const [fetchParams, setFetchParams] = useState({
     available: "",
     sortOption: "",
@@ -23,7 +27,7 @@ const Home = () => {
   useEffect(() => {
     const fetchDataAsync = async () => {
       const data = await fetchData(fetchParams);
-      setCabines(data);
+      dispatch(storeAllCabines(data));
     };
 
     fetchDataAsync();

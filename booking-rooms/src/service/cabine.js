@@ -35,10 +35,19 @@ export const fetchData = async ({ available, sortOption }) => {
 };
 
 export const addCabine = async (body) => {
-  console.log(body);
   const { data, error } = await supabase.from("cabines").upsert(body).select();
-  console.log(data);
   if (error) return error;
 
+  return data;
+};
+
+export const fetchSingeCabine = async (id) => {
+  const { data, error } = await supabase
+    .from("cabines")
+    .select()
+    .eq("id", id)
+    .single();
+
+  if (error) return error;
   return data;
 };

@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Rooms from "./page/rooms/Rooms.jsx";
 import Booking from "./page/booking/Booking.jsx";
 import SidebarWrapper from "./components/wrapper/SideBarWrapper.jsx";
+import { Provider } from "react-redux";
+import store from "./store/store.js";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,8 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
