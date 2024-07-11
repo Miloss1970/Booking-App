@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addCabine } from "../../service/cabine";
+import { addEditCabine } from "../../service/cabine";
 import { useDispatch } from "react-redux";
+import { createCabine, editCabine } from "../../store/cabineSlice";
 
 const schema = z.object({
   name: z.string().nonempty("Name is required"),
@@ -14,7 +15,7 @@ const schema = z.object({
   image: z.string().nonempty("Image is required"),
 });
 
-const CabineForm = ({ cabineToEdit, id }) => {
+const CabineForm = ({ cabineToEdit, id, closeModal }) => {
   console.log(cabineToEdit);
   const dispatch = useDispatch();
   const {
@@ -28,10 +29,15 @@ const CabineForm = ({ cabineToEdit, id }) => {
 
   //napraviti 1 funkciju addEditCabine
   const onSubmit = (data) => {
+    addEditCabine(id, data).then((res) => {
+      dispatch(editCabine({ id: id, updatedCabine: res[0] }));
+      closeModal();
+    });
     if (isEdit) {
     } else {
-      addCabine(data).then((res) => {
-        dispatch(addCabine(res[0]));
+      addEditCabine(null, data).then((res) => {
+        dispatch(createCabine(res[0]));
+        closeModal();
       });
     }
   };
@@ -46,7 +52,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <input
           defaultValue={cabineToEdit?.name || ""}
           {...register("name")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
         />
         {errors.name && (
           <p className="text-red-500 text-xs">{errors.name.message}</p>
@@ -60,7 +66,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <input
           defaultValue={cabineToEdit?.maxCapabilites || ""}
           {...register("maxCapabilites")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
         />
         {errors.maxCapabilites && (
           <p className="text-red-500 text-xs">
@@ -76,7 +82,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <input
           defaultValue={cabineToEdit?.regularPrice || ""}
           {...register("regularPrice")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primaryfocus:ring focus:ring-primary outline-none"
         />
         {errors.regularPrice && (
           <p className="text-red-500 text-xs">{errors.regularPrice.message}</p>
@@ -90,7 +96,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <input
           defaultValue={cabineToEdit?.discount || ""}
           {...register("discount")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
         />
         {errors.discount && (
           <p className="text-red-500 text-xs">{errors.discount.message}</p>
@@ -104,7 +110,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <textarea
           defaultValue={cabineToEdit?.description || ""}
           {...register("description")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
         />
         {errors.description && (
           <p className="text-red-500 text-xs">{errors.description.message}</p>
@@ -116,7 +122,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
         <input
           defaultValue={cabineToEdit?.image || ""}
           {...register("image")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-600 focus:ring focus:ring-orange-600 outline-none"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primaryoutline-none"
         />
         {errors.image && (
           <p className="text-red-500 text-xs">{errors.image.message}</p>
@@ -126,7 +132,7 @@ const CabineForm = ({ cabineToEdit, id }) => {
       <div>
         <button
           type="submit"
-          className="py-2 px-4 text-white bg-orange-600 w-full rounded-lg"
+          className="py-2 px-4 text-white bg-primary w-full rounded-lg"
         >
           {cabineToEdit ? "Edit" : "Submit"}
         </button>

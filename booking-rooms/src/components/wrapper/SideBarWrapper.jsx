@@ -3,10 +3,10 @@ import Sidebar from "../sideBar/SideBar";
 const SidebarWrapper = ({ children }) => {
   return (
     <div className="flex">
-      <div className="flex-[30%]">
+      <div className="flex-[20%]">
         <Sidebar />
       </div>
-      <div className="flex-[70%] p-4">{children}</div>
+      <div className="flex-[80%] px-[80px]">{children}</div>
     </div>
   );
 };

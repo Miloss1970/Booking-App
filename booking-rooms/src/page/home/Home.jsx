@@ -5,12 +5,16 @@ import Modal from "../../components/modal/Modal";
 import CabineForm from "../../components/cabineForm/CabineForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
+import { availabilityOptions, sortOptions } from "../../constants/ui/options";
 
 const Home = () => {
   const [show, setShow] = useState(false);
   const cabines = useSelector(getAllCabines);
   const dispatch = useDispatch();
 
+  const closeModal = () => {
+    setShow(false);
+  };
   const [fetchParams, setFetchParams] = useState({
     available: "",
     sortOption: "",
@@ -41,20 +45,22 @@ const Home = () => {
           onChange={handleFetchParamsChange}
           value={fetchParams.available}
         >
-          <option value="">Filter by</option>
-          <option value="all">All</option>
-          <option value="available">Available</option>
+          {availabilityOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
         <select
           name="sortOption"
           onChange={handleFetchParamsChange}
           value={fetchParams.sortOption}
         >
-          <option value="">Sort by</option>
-          <option value="nameAsc">Name A-Z</option>
-          <option value="nameDesc">Name Z-A</option>
-          <option value="priceAsc">Price Low to High</option>
-          <option value="priceDesc">Price High to Low</option>
+          {sortOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
       {cabines?.map((cabine) => (
@@ -62,12 +68,12 @@ const Home = () => {
       ))}
       <button
         onClick={() => setShow(true)}
-        className="py-2 px-4 bg-orange-600 text-white hover:opacity-[0.7] rounded-lg transition-all duration-300"
+        className="py-2 px-4 bg-primary text-white hover:opacity-[0.7] rounded-lg transition-all duration-300"
       >
         Add Room
       </button>
       <Modal show={show} closeModal={setShow}>
-        <CabineForm />
+        <CabineForm closeModal={closeModal} />
       </Modal>
     </div>
   );

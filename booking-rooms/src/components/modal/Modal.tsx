@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const Modal = ({ show, closeModal, children }) => {
+  useEffect(() => {
+    if (show) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [show]);
   if (!show) return null;
 
   function close() {

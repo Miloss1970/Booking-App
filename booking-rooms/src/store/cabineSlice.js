@@ -11,7 +11,7 @@ const cabineSlice = createSlice({
       state.cabine = actions.payload;
     },
 
-    addCabine: (state, action) => {
+    createCabine: (state, action) => {
       state.cabine.push(action.payload);
     },
     removeCabine(state, action) {
@@ -24,9 +24,9 @@ const cabineSlice = createSlice({
       }
     },
     editCabine(state, action) {
-      const { post_id, updatedCabine } = action.payload;
-      const indexToEdit = state.cabine.findIndex((c) => c.post_id === post_id);
-
+      const { id, updatedCabine } = action.payload;
+      const indexToEdit = state.cabine.findIndex((c) => c.id === id);
+      console.log(indexToEdit, updatedCabine);
       state.cabine[indexToEdit] = {
         ...state.cabine[indexToEdit],
         ...updatedCabine,
@@ -38,5 +38,6 @@ export const getAllCabines = (state) => {
   return state.cabineStore.cabine;
 };
 
-export const { storeAllCabines, addCabine, removePost } = cabineSlice.actions;
+export const { storeAllCabines, createCabine, removePost, editCabine } =
+  cabineSlice.actions;
 export default cabineSlice.reducer;

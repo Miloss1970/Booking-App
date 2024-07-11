@@ -34,11 +34,24 @@ export const fetchData = async ({ available, sortOption }) => {
   }
 };
 
-export const addCabine = async (body) => {
-  const { data, error } = await supabase.from("cabines").upsert(body).select();
-  if (error) return error;
+export const addEditCabine = async (id, body) => {
+  if (id) {
+    const { data, error } = await supabase
+      .from("cabines")
+      .update(body)
+      .eq("id", id)
+      .select();
+    if (error) return error;
+    return data;
+  } else {
+    const { data, error } = await supabase
+      .from("cabines")
+      .upsert(body)
+      .select();
+    if (error) return error;
 
-  return data;
+    return data;
+  }
 };
 
 export const fetchSingeCabine = async (id) => {

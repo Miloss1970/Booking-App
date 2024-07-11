@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 //users
 const Sidebar = () => {
   return (
-    <div className="fixed h-screen w-64 bg-white flex flex-col border-r-2 border-orange-600">
-      <div className="h-14 bg-orange-600 flex items-center justify-center">
+    <div className="fixed h-screen w-64 bg-white flex flex-col border-r-2 border-primary">
+      <div className="h-14 bg-primary flex items-center justify-center">
         <span className="text-white font-bold">Menu</span>
       </div>
       <div className="flex flex-col mt-4">
