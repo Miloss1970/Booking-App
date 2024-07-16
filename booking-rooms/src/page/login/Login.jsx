@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { loginUser } from "../../service/cabine";
 import InputComponent from "../../components/inputComponent/InputComponent";
+import { useDispatch } from "react-redux";
+import { storeUser } from "../../store/cabineSlice";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -13,6 +16,8 @@ const schema = z.object({
 });
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,9 +25,12 @@ const Login = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  //sticenje ruta
-  const onSubmit = async (body) => {
-    loginUser(body).then((res) => console.log(res));
+  const onSubmit = (body) => {
+    loginUser(body).then((res) => {
+      if (!res.user) return alert("Wrong email or password");
+      dispatch(storeUser(res.user.user_metadata));
+      navigate("/home");
+    });
   };
 
   return (
@@ -33,7 +41,8 @@ const Login = () => {
           <InputComponent
             label="Email"
             type="email"
-            register={{ ...register("email") }}
+            register={register}
+            editType={"email"}
           />
           {errors.email && (
             <p className="error-input">{errors.email.message}</p>
@@ -44,7 +53,8 @@ const Login = () => {
           <InputComponent
             label="Password"
             type="password"
-            register={{ ...register("password") }}
+            register={register}
+            editType="password"
           />
           {errors.password && (
             <p className="error-input">{errors.password.message}</p>

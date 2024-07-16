@@ -4,8 +4,8 @@ const InputComponent = ({
   label,
   type = "text",
   cabineToEdit,
-  register,
   editType,
+  register,
 }) => {
   return (
     <div className="mt-1">
@@ -13,7 +13,7 @@ const InputComponent = ({
       <input
         type={type}
         defaultValue={cabineToEdit ? cabineToEdit[editType] || "" : ""}
-        register
+        {...register(editType)}
         className="input"
       />
     </div>

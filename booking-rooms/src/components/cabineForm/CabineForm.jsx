@@ -49,7 +49,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       <div>
         <InputComponent
           label="Name"
-          register={{ ...register("name") }}
+          register={register}
           cabineToEdit={cabineToEdit}
           editType="name"
         />
@@ -63,7 +63,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
           label="Max Capabilities"
           type="number"
           cabineToEdit={cabineToEdit}
-          register={{ ...register("maxCapabilites") }}
+          register={register}
           editType="maxCapabilites"
         />
         {errors.maxCapabilites && (
@@ -78,7 +78,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
           label="Regular Price"
           type="number"
           cabineToEdit={cabineToEdit}
-          register={{ ...register("regularPrice") }}
+          register={register}
           editType="regularPrice"
         />
         {errors.regularPrice && (
@@ -91,7 +91,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
           label="Discount"
           type="number"
           cabineToEdit={cabineToEdit}
-          register={{ ...register("discount") }}
+          register={register}
           editType="discount"
         />
         {errors.discount && (
@@ -115,7 +115,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
         <InputComponent
           label="Image"
           cabineToEdit={cabineToEdit}
-          register={{ ...register("image") }}
+          register={register}
           editType="image"
         />
         {errors.image && <p className="error-input">{errors.image.message}</p>}

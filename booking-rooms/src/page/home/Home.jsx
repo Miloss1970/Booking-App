@@ -6,11 +6,16 @@ import CabineForm from "../../components/cabineForm/CabineForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
 import { availabilityOptions, sortOptions } from "../../constants/ui/options";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [show, setShow] = useState(false);
   const cabines = useSelector(getAllCabines);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.cabineStore);
+
+  if (!user) navigate("/login");
 
   const closeModal = () => {
     setShow(false);

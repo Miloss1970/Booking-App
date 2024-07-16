@@ -89,6 +89,6 @@ export const loginUser = async (body) => {
     password,
   });
 
-  if (error) error.message;
+  if (error) error;
   return data;
 };

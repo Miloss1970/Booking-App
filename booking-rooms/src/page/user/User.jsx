@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { createUser } from "../../service/cabine";
+import InputComponent from "../../components/inputComponent/InputComponent";
 
 const schema = z
   .object({
@@ -30,7 +31,6 @@ const User = () => {
   const onSubmit = (data) => {
     createUser(data).then((res) => console.log(res));
   };
-  // form row input componenta
   return (
     <div className="w-full">
       <h1 className="text-center text-3xl mt-6 font-bold text-gray-700">
@@ -41,7 +41,8 @@ const User = () => {
           <div>
             <InputComponent
               label="Full Name"
-              register={{ ...register("full_name") }}
+              register={register}
+              editType="full_name"
             />
             {errors.fullName && (
               <p className="error-input">{errors.fullName.message}</p>
@@ -49,11 +50,11 @@ const User = () => {
           </div>
 
           <div>
-            <label className="label">Email</label>
             <InputComponent
               label="Email"
               type="email"
-              register={{ ...register("email") }}
+              register={register}
+              editType="email"
             />
             {errors.email && (
               <p className="error-input">{errors.email.message}</p>
@@ -61,11 +62,11 @@ const User = () => {
           </div>
 
           <div>
-            <label className="label">Password</label>
             <InputComponent
-              label="Email"
-              type="email"
-              register={{ ...register("email") }}
+              label="Password"
+              type="password"
+              register={register}
+              editType="password"
             />
             {errors.password && (
               <p className="error-input">{errors.password.message}</p>
@@ -76,7 +77,8 @@ const User = () => {
             <InputComponent
               label="Confirm Password"
               type="password"
-              register={{ ...register("confirmPassword") }}
+              register={register}
+              editType="confirmPassword"
             />
 
             {errors.confirmPassword && (

@@ -4,11 +4,16 @@ const cabineSlice = createSlice({
   name: "cabines",
   initialState: {
     cabine: [],
+    user: null,
   },
 
   reducers: {
     storeAllCabines: (state, actions) => {
       state.cabine = actions.payload;
+    },
+
+    storeUser: (state, actions) => {
+      state.user = actions.payload;
     },
 
     createCabine: (state, action) => {
@@ -38,6 +43,11 @@ export const getAllCabines = (state) => {
   return state.cabineStore.cabine;
 };
 
-export const { storeAllCabines, createCabine, removePost, editCabine } =
-  cabineSlice.actions;
+export const {
+  storeAllCabines,
+  storeUser,
+  createCabine,
+  removePost,
+  editCabine,
+} = cabineSlice.actions;
 export default cabineSlice.reducer;
