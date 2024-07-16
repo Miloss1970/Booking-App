@@ -27,13 +27,12 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
   });
   const isEdit = cabineToEdit ? true : false;
 
-  //napraviti 1 funkciju addEditCabine
   const onSubmit = (data) => {
-    addEditCabine(id, data).then((res) => {
-      dispatch(editCabine({ id: id, updatedCabine: res[0] }));
-      closeModal();
-    });
     if (isEdit) {
+      addEditCabine(id, data).then((res) => {
+        dispatch(editCabine({ id: id, updatedCabine: res[0] }));
+        closeModal();
+      });
     } else {
       addEditCabine(null, data).then((res) => {
         dispatch(createCabine(res[0]));
@@ -52,7 +51,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
         <input
           defaultValue={cabineToEdit?.name || ""}
           {...register("name")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
+          className="input"
         />
         {errors.name && (
           <p className="text-red-500 text-xs">{errors.name.message}</p>
@@ -66,7 +65,7 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
         <input
           defaultValue={cabineToEdit?.maxCapabilites || ""}
           {...register("maxCapabilites")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
+          className="input"
         />
         {errors.maxCapabilites && (
           <p className="text-red-500 text-xs">
@@ -76,64 +75,53 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Regular Price
-        </label>
+        <label className="label">Regular Price</label>
         <input
           defaultValue={cabineToEdit?.regularPrice || ""}
           {...register("regularPrice")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primaryfocus:ring focus:ring-primary outline-none"
+          className="input"
         />
         {errors.regularPrice && (
-          <p className="text-red-500 text-xs">{errors.regularPrice.message}</p>
+          <p className="error-input">{errors.regularPrice.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Discount
-        </label>
+        <label className="label">Discount</label>
         <input
           defaultValue={cabineToEdit?.discount || ""}
           {...register("discount")}
-          className="mt-1 block w-full rounded-md h-[30px] border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
+          className="input"
         />
         {errors.discount && (
-          <p className="text-red-500 text-xs">{errors.discount.message}</p>
+          <p className="error-input">{errors.discount.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Description
-        </label>
+        <label className="label">Description</label>
         <textarea
           defaultValue={cabineToEdit?.description || ""}
           {...register("description")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary outline-none"
+          className="input"
         />
         {errors.description && (
-          <p className="text-red-500 text-xs">{errors.description.message}</p>
+          <p className="error-input">{errors.description.message}</p>
         )}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Image</label>
+        <label className="label">Image</label>
         <input
           defaultValue={cabineToEdit?.image || ""}
           {...register("image")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primaryoutline-none"
+          className="input"
         />
-        {errors.image && (
-          <p className="text-red-500 text-xs">{errors.image.message}</p>
-        )}
+        {errors.image && <p className="error-input">{errors.image.message}</p>}
       </div>
 
       <div>
-        <button
-          type="submit"
-          className="py-2 px-4 text-white bg-primary w-full rounded-lg"
-        >
+        <button type="submit" className="btn-submit">
           {cabineToEdit ? "Edit" : "Submit"}
         </button>
       </div>

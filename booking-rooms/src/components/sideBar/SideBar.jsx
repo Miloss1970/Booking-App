@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//users
+
 const Sidebar = () => {
   return (
     <div className="fixed h-screen w-64 bg-white flex flex-col border-r-2 border-primary">
@@ -11,8 +11,12 @@ const Sidebar = () => {
         <Link to="/" className="py-2 px-4 hover:bg-gray-200">
           Rooms
         </Link>
+
         <Link to="/booking" className="py-2 px-4 hover:bg-gray-200">
           Booking
+        </Link>
+        <Link to="/user" className="py-2 px-4 hover:bg-gray-200">
+          User
         </Link>
       </div>
     </div>

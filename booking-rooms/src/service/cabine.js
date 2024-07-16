@@ -36,6 +36,7 @@ export const fetchData = async ({ available, sortOption }) => {
 
 export const addEditCabine = async (id, body) => {
   if (id) {
+    //query
     const { data, error } = await supabase
       .from("cabines")
       .update(body)
@@ -62,5 +63,32 @@ export const fetchSingeCabine = async (id) => {
     .single();
 
   if (error) return error;
+  return data;
+};
+
+export const createUser = async (body) => {
+  const { data, error } = await supabase.auth.signUp({
+    email: body.email,
+    password: body.password,
+    options: {
+      data: {
+        full_name: body.full_name,
+      },
+    },
+  });
+
+  if (error) error.message;
+  return data;
+};
+
+export const loginUser = async (body) => {
+  const { email, password } = body;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) error.message;
   return data;
 };
