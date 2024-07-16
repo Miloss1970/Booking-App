@@ -39,8 +39,10 @@ const User = () => {
       <div className="flex justify-center">
         <form className="w-[500px]" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label className="label">Full Name</label>
-            <input className="input" {...register("full_name")} />
+            <InputComponent
+              label="Full Name"
+              register={{ ...register("full_name") }}
+            />
             {errors.fullName && (
               <p className="error-input">{errors.fullName.message}</p>
             )}
@@ -48,7 +50,11 @@ const User = () => {
 
           <div>
             <label className="label">Email</label>
-            <input className="input" type="email" {...register("email")} />
+            <InputComponent
+              label="Email"
+              type="email"
+              register={{ ...register("email") }}
+            />
             {errors.email && (
               <p className="error-input">{errors.email.message}</p>
             )}
@@ -56,10 +62,10 @@ const User = () => {
 
           <div>
             <label className="label">Password</label>
-            <input
-              className="input"
-              type="password"
-              {...register("password")}
+            <InputComponent
+              label="Email"
+              type="email"
+              register={{ ...register("email") }}
             />
             {errors.password && (
               <p className="error-input">{errors.password.message}</p>
@@ -67,12 +73,12 @@ const User = () => {
           </div>
 
           <div>
-            <label className="label">Confirm Password</label>
-            <input
-              className="input"
+            <InputComponent
+              label="Confirm Password"
               type="password"
-              {...register("confirmPassword")}
+              register={{ ...register("confirmPassword") }}
             />
+
             {errors.confirmPassword && (
               <p className="error-input">{errors.confirmPassword.message}</p>
             )}

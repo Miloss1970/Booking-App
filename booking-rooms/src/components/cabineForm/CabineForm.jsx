@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addEditCabine } from "../../service/cabine";
 import { useDispatch } from "react-redux";
 import { createCabine, editCabine } from "../../store/cabineSlice";
+import InputComponent from "../inputComponent/InputComponent";
 
 const schema = z.object({
   name: z.string().nonempty("Name is required"),
@@ -16,7 +17,6 @@ const schema = z.object({
 });
 
 const CabineForm = ({ cabineToEdit, id, closeModal }) => {
-  console.log(cabineToEdit);
   const dispatch = useDispatch();
   const {
     register,
@@ -47,11 +47,11 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       className="space-y-4 p-4 w-[300px] mx-auto"
     >
       <div>
-        <label className="block text-sm font-medium text-gray-700">Name</label>
-        <input
-          defaultValue={cabineToEdit?.name || ""}
-          {...register("name")}
-          className="input"
+        <InputComponent
+          label="Name"
+          register={{ ...register("name") }}
+          cabineToEdit={cabineToEdit}
+          editType="name"
         />
         {errors.name && (
           <p className="text-red-500 text-xs">{errors.name.message}</p>
@@ -59,13 +59,12 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Max Capabilities
-        </label>
-        <input
-          defaultValue={cabineToEdit?.maxCapabilites || ""}
-          {...register("maxCapabilites")}
-          className="input"
+        <InputComponent
+          label="Max Capabilities"
+          type="number"
+          cabineToEdit={cabineToEdit}
+          register={{ ...register("maxCapabilites") }}
+          editType="maxCapabilites"
         />
         {errors.maxCapabilites && (
           <p className="text-red-500 text-xs">
@@ -75,11 +74,12 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       </div>
 
       <div>
-        <label className="label">Regular Price</label>
-        <input
-          defaultValue={cabineToEdit?.regularPrice || ""}
-          {...register("regularPrice")}
-          className="input"
+        <InputComponent
+          label="Regular Price"
+          type="number"
+          cabineToEdit={cabineToEdit}
+          register={{ ...register("regularPrice") }}
+          editType="regularPrice"
         />
         {errors.regularPrice && (
           <p className="error-input">{errors.regularPrice.message}</p>
@@ -87,11 +87,12 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       </div>
 
       <div>
-        <label className="label">Discount</label>
-        <input
-          defaultValue={cabineToEdit?.discount || ""}
-          {...register("discount")}
-          className="input"
+        <InputComponent
+          label="Discount"
+          type="number"
+          cabineToEdit={cabineToEdit}
+          register={{ ...register("discount") }}
+          editType="discount"
         />
         {errors.discount && (
           <p className="error-input">{errors.discount.message}</p>
@@ -111,11 +112,11 @@ const CabineForm = ({ cabineToEdit, id, closeModal }) => {
       </div>
 
       <div>
-        <label className="label">Image</label>
-        <input
-          defaultValue={cabineToEdit?.image || ""}
-          {...register("image")}
-          className="input"
+        <InputComponent
+          label="Image"
+          cabineToEdit={cabineToEdit}
+          register={{ ...register("image") }}
+          editType="image"
         />
         {errors.image && <p className="error-input">{errors.image.message}</p>}
       </div>

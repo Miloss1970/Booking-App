@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { loginUser } from "../../service/cabine";
+import InputComponent from "../../components/inputComponent/InputComponent";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -29,14 +30,10 @@ const Login = () => {
       <h2 className="text-2xl font-bold mb-6">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
-          <label htmlFor="email" className="label">
-            Email
-          </label>
-          <input
-            id="email"
+          <InputComponent
+            label="Email"
             type="email"
-            {...register("email")}
-            className="input"
+            register={{ ...register("email") }}
           />
           {errors.email && (
             <p className="error-input">{errors.email.message}</p>
@@ -44,24 +41,17 @@ const Login = () => {
         </div>
 
         <div>
-          <label htmlFor="password" className="label">
-            Password
-          </label>
-          <input
-            id="password"
+          <InputComponent
+            label="Password"
             type="password"
-            {...register("password")}
-            className="input"
+            register={{ ...register("password") }}
           />
           {errors.password && (
             <p className="error-input">{errors.password.message}</p>
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark"
-        >
+        <button type="submit" className="btn-submit">
           Login
         </button>
       </form>
