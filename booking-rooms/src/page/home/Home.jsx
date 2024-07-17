@@ -15,7 +15,11 @@ const Home = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.cabineStore);
 
-  if (!user) navigate("/login");
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
 
   const closeModal = () => {
     setShow(false);
@@ -43,8 +47,8 @@ const Home = () => {
   }, [fetchParams]);
 
   return (
-    <div>
-      <div className="flex justify-end gap-[30px] my-[30px]">
+    <div className="mt-[50px]">
+      <div className="flex justify-start gap-[30px] my-[30px]">
         <select
           name="available"
           onChange={handleFetchParamsChange}

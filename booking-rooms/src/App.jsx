@@ -9,37 +9,25 @@ import Home from "./page/home/Home";
 import Login from "./page/login/Login";
 import Booking from "./page/booking/Booking";
 import User from "./page/user/User";
-import SidebarWrapper from "./components/wrapper/SideBarWrapper";
+import AppLayout from "./page/applayout/AppLayout";
+import ProtectedRoute from "./utills/protectedRoute/ProtectedRoute";
 function App() {
   return (
     <Router>
       <Routes>
         <Route
-          path="/home"
+          path="/"
           element={
-            <SidebarWrapper>
-              <Home />
-            </SidebarWrapper>
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/rooms" element={<Home />} />
+          <Route path="/user" element={<User />} />
+        </Route>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/booking"
-          element={
-            <SidebarWrapper>
-              <Booking />
-            </SidebarWrapper>
-          }
-        />
-        <Route
-          path="/user"
-          element={
-            <SidebarWrapper>
-              <User />
-            </SidebarWrapper>
-          }
-        />
-        <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
   );

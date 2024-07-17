@@ -29,7 +29,7 @@ const Login = () => {
     loginUser(body).then((res) => {
       if (!res.user) return alert("Wrong email or password");
       dispatch(storeUser(res.user.user_metadata));
-      navigate("/home");
+      navigate("/rooms");
     });
   };
 
