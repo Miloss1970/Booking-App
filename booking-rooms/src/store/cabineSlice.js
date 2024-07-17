@@ -16,6 +16,9 @@ const cabineSlice = createSlice({
       state.user = actions.payload;
     },
 
+    loggOut: (state) => {
+      state.user = null;
+    },
     createCabine: (state, action) => {
       state.cabine.push(action.payload);
     },
@@ -49,5 +52,6 @@ export const {
   createCabine,
   removePost,
   editCabine,
+  loggOut,
 } = cabineSlice.actions;
 export default cabineSlice.reducer;

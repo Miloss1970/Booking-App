@@ -1,9 +1,11 @@
 import React from "react";
 import { MdLogout } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loggOut } from "../../store/cabineSlice";
 
 const NavBar = () => {
   const { user } = useSelector((state) => state.cabineStore);
+  const dispatch = useDispatch();
   const getInitials = (fullName) => {
     if (fullName) {
       return fullName
@@ -13,6 +15,9 @@ const NavBar = () => {
         .toUpperCase();
     }
   };
+  const handleLogout = () => {
+    dispatch(loggOut());
+  };
 
   return (
     <nav className="col-start-2 row-start-1 h-[60px]  bg-white px-[80px] flex justify-between items-center">
@@ -20,7 +25,10 @@ const NavBar = () => {
         <p>{getInitials(user?.full_name)}</p>
       </div>
       <div>
-        <p className="text-primary font-bold flex items-center gap-3 text-[18px] cursor-pointer">
+        <p
+          onClick={handleLogout}
+          className="text-primary font-bold flex items-center gap-3 text-[18px] cursor-pointer"
+        >
           <MdLogout /> log out
         </p>
       </div>
