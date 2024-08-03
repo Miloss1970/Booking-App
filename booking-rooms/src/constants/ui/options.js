@@ -11,3 +11,10 @@ export const sortOptions = [
   { value: "priceAsc", label: "Price Low to High" },
   { value: "priceDesc", label: "Price High to Low" },
 ];
+
+export const statusOptions = [
+  "All",
+  "Checked In",
+  "Checked Out",
+  "Unconfirmed",
+];

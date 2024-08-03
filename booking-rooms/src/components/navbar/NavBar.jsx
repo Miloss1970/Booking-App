@@ -18,6 +18,11 @@ const NavBar = () => {
   const handleLogout = () => {
     dispatch(loggOut());
   };
+  //NAPRAVI TABELU U SUPABASE BOOKING IMAM IZGLED 10 BOOKINGA RUCNO
+  //DODAJ 10 GOSTIJU TABELA GOSTI
+  //BOOKING RUTA DOHVATI SVE TE BOOKINGE
+  // KOJA JE KABINA REZERVISANA GOST KOJI JE REZERVISAO
+  //FULL NAME EMAIL NACIONALITY
 
   return (
     <nav className="col-start-2 row-start-1 h-[60px]  bg-white px-[80px] flex justify-between items-center">

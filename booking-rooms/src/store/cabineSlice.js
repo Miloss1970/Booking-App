@@ -32,9 +32,15 @@ const cabineSlice = createSlice({
       }
     },
     editCabine(state, action) {
+      //promenim funkciju
+
       const { id, updatedCabine } = action.payload;
+      state.cabine = state.cabine.map((cabin) => {
+        return cabin.id === id ? updatedCabine : cabin;
+      });
+
       const indexToEdit = state.cabine.findIndex((c) => c.id === id);
-      console.log(indexToEdit, updatedCabine);
+
       state.cabine[indexToEdit] = {
         ...state.cabine[indexToEdit],
         ...updatedCabine,

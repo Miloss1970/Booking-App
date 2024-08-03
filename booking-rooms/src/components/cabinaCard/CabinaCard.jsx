@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import { MdEdit } from "react-icons/md";
-import { RiDeleteBinLine } from "react-icons/ri";
+
 import Modal from "../modal/Modal";
 import CabineForm from "../cabineForm/CabineForm";
+import DropDownMenu from "../ui/dropDownMenu/DropDownMenu";
+import Button from "../ui/button/Button";
 
 const CabinaCard = ({ data }) => {
   const [show, setShow] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
   const closeModal = () => {
     setOpenModal(false);
+  };
+  const closeDropDown = () => {
+    setShow(false);
   };
 
   return (
@@ -40,24 +47,14 @@ const CabinaCard = ({ data }) => {
         </button>
       </div>
       {show ? (
-        <div>
-          <div
-            onClick={() => setShow(false)}
-            className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-0"
-          ></div>
-          <div className="absolute w-[100px] h-[70px] bg-gray-200 top-[-50px] rounded-lg p-2 right-[-75px] z-20">
-            <p
-              onClick={() => setOpenModal(true)}
-              className="flex gap-1 items-center cursor-pointer hover:opacity-[0.7]"
-            >
-              <span className="text-primary  font-bold">Edit</span> <MdEdit />
-            </p>
-            <p className="flex gap-1 items-center cursor-pointer hover:opacity-[0.7]">
-              <span className="text-red-600  font-bold">Delete</span>{" "}
-              <RiDeleteBinLine className="text-[20px]" />
-            </p>
-          </div>
-        </div>
+        <DropDownMenu closeDropDown={closeDropDown}>
+          <Button
+            onClick={openModal}
+            className="drop-btn-primary"
+            text="Edit"
+          />
+          <Button className="drop-btn-red" text="Delete" />
+        </DropDownMenu>
       ) : null}
       <Modal show={openModal} closeModal={closeModal}>
         <CabineForm cabineToEdit={data} id={data.id} closeModal={closeModal} />
