@@ -12,6 +12,14 @@ export const sortOptions = [
   { value: "priceDesc", label: "Price High to Low" },
 ];
 
+export const bookingSort = [
+  { value: "", label: "Sort by" },
+  { value: "dateAsc", label: "date (latest)" },
+  { value: "dateDesc", label: "Name (earliest)" },
+  { value: "priceAsc", label: "Price Low to High" },
+  { value: "priceDesc", label: "Price High to Low" },
+];
+
 export const statusOptions = [
   "All",
   "Checked In",

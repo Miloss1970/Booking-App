@@ -22,6 +22,6 @@
     @apply py-0.5 px-[5px] text-[14px] font-bold bg-green-600 text-white rounded-md cursor-pointer hover:opacity-[0.7] transition-all duration-300 w-full;
   }
   .drop-btn-primary {
-    @apply py-0.5 bg-primary text-white text-[14px] font-bold rounded-md cursor-pointer hover:opacity-[0.7] transition-all duration-300 w-full mt-1;
+    @apply py-0.5 bg-primary text-white text-[14px] font-bold rounded-md cursor-pointer hover:opacity-[0.7] transition-all duration-300 w-full;
   }
 }

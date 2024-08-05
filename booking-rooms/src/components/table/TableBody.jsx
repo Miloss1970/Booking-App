@@ -4,12 +4,11 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Button from "../ui/button/Button";
 import DropDownMenu from "../ui/dropDownMenu/DropDownMenu";
 
-const TableBody = ({ booking, openSetting }) => {
+const TableBody = ({ booking }) => {
   const [show, setShow] = useState(false);
   const startDate = new Date(booking.startDate);
   const endDate = new Date(booking.endDate);
   const days = differenceInDays(endDate, startDate);
-  const amount = booking.cabines.regularPrice * days;
   const monthsDifference = differenceInMonths(new Date(), startDate);
 
   const closeDropDown = () => {
@@ -55,7 +54,7 @@ const TableBody = ({ booking, openSetting }) => {
 
       <td className="py-2 px-4 border-b text-left">
         ${" "}
-        {amount.toLocaleString("en-US", {
+        {booking.totalPrice.toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}
@@ -73,8 +72,8 @@ const TableBody = ({ booking, openSetting }) => {
       {show ? (
         <DropDownMenu closeDropDown={closeDropDown}>
           <Button
-            className={`${getStatusClass(status)} w-full`}
-            text={getStatus(status)}
+            className={`${getStatusClass(booking.status)} mt-1`}
+            text={getStatus(booking.status)}
           />
           <Button className="drop-btn-primary" text="details" />
         </DropDownMenu>

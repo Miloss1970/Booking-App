@@ -49,8 +49,8 @@ const CabinaCard = ({ data }) => {
       {show ? (
         <DropDownMenu closeDropDown={closeDropDown}>
           <Button
-            onClick={openModal}
-            className="drop-btn-primary"
+            onClick={handleOpenModal}
+            className="drop-btn-primary mt-1"
             text="Edit"
           />
           <Button className="drop-btn-red" text="Delete" />

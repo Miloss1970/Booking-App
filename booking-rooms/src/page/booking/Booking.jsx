@@ -2,39 +2,63 @@ import React, { useEffect, useState } from "react";
 import { fetchBooking } from "../../service/booking";
 import TableHead from "../../components/table/TableHead";
 import TableBody from "../../components/table/TableBody";
-import { statusOptions } from "../../constants/ui/options";
+import { bookingSort, statusOptions } from "../../constants/ui/options";
+import SelectInput from "../../components/ui/selectInput/SelectInput";
 
 const Booking = () => {
   const [booking, setBooking] = useState([]);
-  const [activeFilter, setActiveFilter] = useState("All");
-
+  const [fetchParams, setFetchParams] = useState({
+    status: "All",
+    sortOptions: "",
+  });
   useEffect(() => {
-    fetchBooking().then((res) => setBooking(res));
-  }, []);
+    const fetchDataAsync = async () => {
+      const data = await fetchBooking(fetchParams);
+      setBooking(data);
+    };
 
-  const handleFilterClick = (filter) => {
-    setActiveFilter(filter);
+    fetchDataAsync();
+  }, [fetchParams]);
+
+  const handleStatus = (status) => {
+    setFetchParams((prev) => ({
+      ...prev,
+      status: status,
+    }));
+  };
+
+  const handleBookingSort = (event) => {
+    setFetchParams((prev) => ({
+      ...prev,
+      sortOptions: event.target.value,
+    }));
   };
 
   return (
     <div className="mx-auto">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center my-4">
         <h2 className="mb-4 font-bold text-[22px]">All Booking</h2>
 
         <div className="flex gap-3">
-          {statusOptions.map((filter) => (
+          {statusOptions.map((status) => (
             <p
-              key={filter}
-              onClick={() => handleFilterClick(filter)}
+              key={status}
+              onClick={() => handleStatus(status)}
               className={`cursor-pointer ${
-                activeFilter === filter
+                fetchParams.status === status
                   ? "text-primary font-bold"
                   : "text-gray-500"
               }`}
             >
-              {filter}
+              {status}
             </p>
           ))}
+
+          <SelectInput
+            options={bookingSort}
+            value={fetchParams.sortOptions}
+            onChange={handleBookingSort}
+          />
         </div>
       </div>
 

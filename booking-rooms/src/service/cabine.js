@@ -9,10 +9,10 @@ export const fetchData = async ({ available, sortOption }) => {
 
   switch (sortOption) {
     case "nameAsc":
-      query = query.order("name", { ascending: true });
+      query = query.order("status", { ascending: true });
       break;
     case "nameDesc":
-      query = query.order("name", { ascending: false });
+      query = query.order("status", { ascending: false });
       break;
     case "priceAsc":
       query = query.order("regularPrice", { ascending: true });

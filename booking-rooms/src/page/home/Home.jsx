@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
 import { availabilityOptions, sortOptions } from "../../constants/ui/options";
 import { useNavigate } from "react-router-dom";
+import SelectInput from "../../components/ui/selectInput/SelectInput";
 
 const Home = () => {
   const [show, setShow] = useState(false);
@@ -14,7 +15,10 @@ const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.cabineStore);
-
+  const [fetchParams, setFetchParams] = useState({
+    available: "",
+    sortOption: "",
+  });
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -24,10 +28,6 @@ const Home = () => {
   const closeModal = () => {
     setShow(false);
   };
-  const [fetchParams, setFetchParams] = useState({
-    available: "",
-    sortOption: "",
-  });
 
   const handleFetchParamsChange = (event) => {
     const { name, value } = event.target;
@@ -49,28 +49,18 @@ const Home = () => {
   return (
     <div className="mt-[50px]">
       <div className="flex justify-start gap-[30px] my-[30px]">
-        <select
+        <SelectInput
           name="available"
-          onChange={handleFetchParamsChange}
+          options={availabilityOptions}
           value={fetchParams.available}
-        >
-          {availabilityOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <select
-          name="sortOption"
           onChange={handleFetchParamsChange}
+        />
+        <SelectInput
+          name="sortOption"
+          options={sortOptions}
           value={fetchParams.sortOption}
-        >
-          {sortOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          onChange={handleFetchParamsChange}
+        />
       </div>
       {cabines?.map((cabine) => (
         <CabinaCard key={cabine.id} data={cabine} />
