@@ -1,8 +1,22 @@
 import React from "react";
 
-const Button = ({ onClick, className, text }) => {
+const colors = {
+  red: "bg-red-600",
+  primary: "bg-orange-600",
+  green: "bg-green-600",
+  gray: "bg-gray-400",
+};
+
+const Button = ({ onClick, color, name, text }) => {
+  const baseClass = `text-[14px] text-white rounded-md cursor-pointer hover:opacity-70 transition-all duration-300`;
+
+  const drop = `py-0.5 px-[5px] font-bold w-full ${baseClass}`;
+  const detail = `px-4 py-2 ${baseClass}`;
+
+  const className = name === "drop" ? drop : detail;
+  const colorClass = colors[color] || "";
   return (
-    <button onClick={onClick} className={` ${className} mb-1`}>
+    <button onClick={onClick} className={`${className} ${colorClass} mb-1`}>
       {text}
     </button>
   );

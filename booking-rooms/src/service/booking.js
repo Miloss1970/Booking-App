@@ -12,7 +12,6 @@ export const fetchBooking = async (fetchData) => {
   if (fetchData.status && fetchData.status !== "All") {
     query = query.eq("status", transformStatus(fetchData.status));
   }
-  console.log(fetchData.sortOptions);
   switch (fetchData.sortOptions) {
     case "priceAsc":
       query = query.order("totalPrice", { ascending: true });
@@ -32,10 +31,22 @@ export const fetchBooking = async (fetchData) => {
 
   const { data, error } = await query;
 
-  if (error) {
-    console.error(error);
-    return error;
-  }
+  if (error) return error;
+
+  return data;
+};
+
+export const getSingeBookig = async (id) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      "id, created_at, startDate, endDate, status, totalPrice, numGuests,hasBreakfast,isPaid,cabines(name, regularPrice), guests(full_name, email,countryFlag)",
+      { count: "exact" }
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) return error;
 
   return data;
 };

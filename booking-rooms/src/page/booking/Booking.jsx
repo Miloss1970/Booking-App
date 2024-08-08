@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { fetchBooking } from "../../service/booking";
 import TableHead from "../../components/table/TableHead";
 import TableBody from "../../components/table/TableBody";
 import { bookingSort, statusOptions } from "../../constants/ui/options";
 import SelectInput from "../../components/ui/selectInput/SelectInput";
-
+import { useBooking } from "../../hooks";
+import load from "../../utills/images/load.gif";
 const Booking = () => {
   const [booking, setBooking] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [fetchParams, setFetchParams] = useState({
     status: "All",
     sortOptions: "",
   });
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      const data = await fetchBooking(fetchParams);
-      setBooking(data);
-    };
 
-    fetchDataAsync();
-  }, [fetchParams]);
+  useBooking(fetchParams, setBooking, setLoading);
 
   const handleStatus = (status) => {
     setFetchParams((prev) => ({
@@ -39,7 +34,7 @@ const Booking = () => {
       <div className="flex justify-between items-center my-4">
         <h2 className="mb-4 font-bold text-[22px]">All Booking</h2>
 
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           {statusOptions.map((status) => (
             <p
               key={status}
@@ -63,12 +58,20 @@ const Booking = () => {
       </div>
 
       <table className="w-full bg-white border border-gray-400 rounded-full text-[14px]">
-        <TableHead />
-        <tbody>
-          {booking.map((booking) => (
-            <TableBody booking={booking} />
-          ))}
-        </tbody>
+        {loading ? (
+          <>
+            <TableHead />
+            <tbody>
+              {booking.map((booking) => (
+                <TableBody booking={booking} />
+              ))}
+            </tbody>
+          </>
+        ) : (
+          <div className="flex justify-center items-center">
+            <img src={load} className="h-[100px] w-[100px]" alt="" />
+          </div>
+        )}
       </table>
     </div>
   );

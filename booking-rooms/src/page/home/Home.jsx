@@ -8,17 +8,20 @@ import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
 import { availabilityOptions, sortOptions } from "../../constants/ui/options";
 import { useNavigate } from "react-router-dom";
 import SelectInput from "../../components/ui/selectInput/SelectInput";
+import { useRooms } from "../../hooks";
 
 const Home = () => {
   const [show, setShow] = useState(false);
   const cabines = useSelector(getAllCabines);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.cabineStore);
   const [fetchParams, setFetchParams] = useState({
     available: "",
     sortOption: "",
   });
+
+  useRooms(fetchParams);
+
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -36,15 +39,6 @@ const Home = () => {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    const fetchDataAsync = async () => {
-      const data = await fetchData(fetchParams);
-      dispatch(storeAllCabines(data));
-    };
-
-    fetchDataAsync();
-  }, [fetchParams]);
 
   return (
     <div className="mt-[50px]">

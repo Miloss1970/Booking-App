@@ -1,37 +1,45 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { format, differenceInDays, differenceInMonths } from "date-fns";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Button from "../ui/button/Button";
 import DropDownMenu from "../ui/dropDownMenu/DropDownMenu";
+import Td from "./Td";
 
 const TableBody = ({ booking }) => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
   const startDate = new Date(booking.startDate);
   const endDate = new Date(booking.endDate);
   const days = differenceInDays(endDate, startDate);
   const monthsDifference = differenceInMonths(new Date(), startDate);
-
+  console.log(booking);
   const closeDropDown = () => {
     setShow(false);
   };
 
   const getStatus = (status) => {
-    return status === "checked-in" ? "checked-out" : "checked-in";
+    return status === "checked-in" ? "check-out" : "check-in";
   };
 
   const getStatusClass = (status) => {
-    return status === "checked-in" ? "drop-btn-red" : "drop-btn-green";
+    return status === "checked-in" ? "red" : "green";
   };
+
+  const handleNavigateToDetails = () => {
+    navigate(`/detailsBooking/${booking.id}`);
+  };
+
   return (
     <tr key={booking.id} className="text-start relative">
-      <td className="py-2 px-4 border-b text-left">{booking.cabines.name}</td>
-      <td className="py-2 px-4 border-b text-left">
+      <Td>{booking.cabines.name}</Td>
+      <Td>
         <div>
           {booking.guests.full_name}
           <p className="text-gray-500">{booking.guests.email}</p>
         </div>
-      </td>
-      <td className="py-2 px-4 border-b text-left">
+      </Td>
+      <Td>
         <div className="flex flex-col items-start">
           <p className="text-gray-500">
             {monthsDifference} months ago &rarr;
@@ -44,22 +52,20 @@ const TableBody = ({ booking }) => {
             )}`}
           </p>
         </div>
-      </td>
-
-      <td className="py-2 px-4 border-b text-left">
+      </Td>
+      <Td>
         <div>
           <p className="text-gray-500">{booking.status}</p>
         </div>
-      </td>
-
-      <td className="py-2 px-4 border-b text-left">
+      </Td>
+      <Td>
         ${" "}
         {booking.totalPrice.toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}
-      </td>
-      <td className="py-2 px-4 border-b text-left">
+      </Td>
+      <Td>
         <div>
           <p
             className="text-gray-500 text-[18px] cursor-pointer"
@@ -68,14 +74,20 @@ const TableBody = ({ booking }) => {
             <BsThreeDotsVertical />
           </p>
         </div>
-      </td>
+      </Td>
       {show ? (
         <DropDownMenu closeDropDown={closeDropDown}>
           <Button
-            className={`${getStatusClass(booking.status)} mt-1`}
+            color={`${getStatusClass(booking.status)}`}
             text={getStatus(booking.status)}
+            name="drop"
           />
-          <Button className="drop-btn-primary" text="details" />
+          <Button
+            color="primary"
+            onClick={handleNavigateToDetails}
+            text="details"
+            name="drop"
+          />
         </DropDownMenu>
       ) : null}
     </tr>

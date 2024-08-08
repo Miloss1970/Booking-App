@@ -11,6 +11,7 @@ import Booking from "./page/booking/Booking";
 import User from "./page/user/User";
 import AppLayout from "./page/applayout/AppLayout";
 import ProtectedRoute from "./utills/protectedRoute/ProtectedRoute";
+import DetailBooking from "./page/detailBooking/DetailBooking";
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/rooms" element={<Home />} />
           <Route path="/user" element={<User />} />
+          <Route path="/detailsBooking/:id" element={<DetailBooking />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>

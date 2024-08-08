@@ -14,8 +14,8 @@ export const sortOptions = [
 
 export const bookingSort = [
   { value: "", label: "Sort by" },
-  { value: "dateAsc", label: "date (latest)" },
-  { value: "dateDesc", label: "Name (earliest)" },
+  { value: "dateAsc", label: "Date (latest)" },
+  { value: "dateDesc", label: "Date (earliest)" },
   { value: "priceAsc", label: "Price Low to High" },
   { value: "priceDesc", label: "Price High to Low" },
 ];
