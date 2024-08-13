@@ -9,10 +9,10 @@ export const fetchData = async ({ available, sortOption }) => {
 
   switch (sortOption) {
     case "nameAsc":
-      query = query.order("status", { ascending: true });
+      query = query.order("name", { ascending: true });
       break;
     case "nameDesc":
-      query = query.order("status", { ascending: false });
+      query = query.order("name", { ascending: false });
       break;
     case "priceAsc":
       query = query.order("regularPrice", { ascending: true });
@@ -26,12 +26,9 @@ export const fetchData = async ({ available, sortOption }) => {
 
   const { data, error } = await query;
 
-  if (error) {
-    console.error(error);
-    return error;
-  } else {
-    return data;
-  }
+  if (error) return error;
+
+  return data;
 };
 
 export const addEditCabine = async (id, body) => {

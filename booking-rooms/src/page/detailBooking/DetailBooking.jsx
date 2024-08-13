@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { getSingeBookig } from "../../service/booking";
-import { differenceInDays } from "date-fns";
 
 import DetailsButtons from "../../components/ui/detailsButtons/DetailsButtons";
-import { getStatusClasses, monthsOrYears } from "../../utills/helpers";
+import { getStatusClasses } from "../../utills/helpers";
 import BookingDetailsCard from "../../components/bookingDetailsCard/BookingDetailsCard";
+import { useSelector } from "react-redux";
+import { getSingleBooking } from "../../store/bookingSlice";
 
 const DetailBooking = () => {
-  const [booking, setBooking] = useState({});
   const { id } = useParams();
 
-  useEffect(() => {
-    getSingeBookig(id).then((res) => setBooking(res));
-  }, [id]);
-  //update single field in table in supabase
+  const booking = useSelector((state) => getSingleBooking(state, id));
   return (
     <div className="mt-[50px]">
       <div className="flex gap-3 items-center mb-[20px]">
@@ -29,7 +25,7 @@ const DetailBooking = () => {
       </div>
       <BookingDetailsCard booking={booking} />
       <div className="flex justify-end">
-        <DetailsButtons status={booking.status} />
+        <DetailsButtons status={booking.status} booking={booking} />
       </div>
     </div>
   );

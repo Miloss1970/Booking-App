@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { fetchData } from "../../service/cabine";
 import CabinaCard from "../../components/cabinaCard/CabinaCard";
 import Modal from "../../components/modal/Modal";
 import CabineForm from "../../components/cabineForm/CabineForm";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllCabines, storeAllCabines } from "../../store/cabineSlice";
+import { useSelector } from "react-redux";
+import { getAllCabines } from "../../store/cabineSlice";
 import { availabilityOptions, sortOptions } from "../../constants/ui/options";
 import { useNavigate } from "react-router-dom";
 import SelectInput from "../../components/ui/selectInput/SelectInput";

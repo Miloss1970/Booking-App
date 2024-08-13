@@ -3,6 +3,7 @@ import { fetchData } from "./service/cabine";
 import { useEffect } from "react";
 import { storeAllCabines } from "./store/cabineSlice";
 import { fetchBooking } from "./service/booking";
+import { storeAllBookings } from "./store/bookingSlice";
 
 export const useRooms = (fetchParams) => {
   const dispatch = useDispatch();
@@ -17,12 +18,14 @@ export const useRooms = (fetchParams) => {
   }, [fetchParams]);
 };
 
-export const useBooking = (fetchParams, setBooking, setLoading) => {
+export const useBooking = (fetchParams, setLoading) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchDataAsync = async () => {
       const data = await fetchBooking(fetchParams);
       if (data) {
-        setBooking(data);
+        dispatch(storeAllBookings(data));
         setLoading(true);
       }
     };

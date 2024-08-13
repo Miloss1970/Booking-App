@@ -18,6 +18,9 @@ const Sidebar = () => {
         <Link to="/user" className="py-2 px-4 hover:bg-gray-200">
           User
         </Link>
+        <Link to="/settings" className="py-2 px-4 hover:bg-gray-200">
+          Settings
+        </Link>
       </div>
     </div>
   );

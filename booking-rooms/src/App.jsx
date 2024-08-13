@@ -12,6 +12,8 @@ import User from "./page/user/User";
 import AppLayout from "./page/applayout/AppLayout";
 import ProtectedRoute from "./utills/protectedRoute/ProtectedRoute";
 import DetailBooking from "./page/detailBooking/DetailBooking";
+import CheckIn from "./page/checkIn/ChechIn";
+import Settings from "./page/settings/Settings";
 function App() {
   return (
     <Router>
@@ -28,6 +30,8 @@ function App() {
           <Route path="/rooms" element={<Home />} />
           <Route path="/user" element={<User />} />
           <Route path="/detailsBooking/:id" element={<DetailBooking />} />
+          <Route path="/check-in/:id" element={<CheckIn />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="/login" element={<Login />} />
       </Routes>

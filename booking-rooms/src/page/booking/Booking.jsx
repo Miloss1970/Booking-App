@@ -5,15 +5,17 @@ import { bookingSort, statusOptions } from "../../constants/ui/options";
 import SelectInput from "../../components/ui/selectInput/SelectInput";
 import { useBooking } from "../../hooks";
 import load from "../../utills/images/load.gif";
+import { getAllBookings } from "../../store/bookingSlice";
+import { useSelector } from "react-redux";
 const Booking = () => {
-  const [booking, setBooking] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchParams, setFetchParams] = useState({
     status: "All",
     sortOptions: "",
   });
+  const booking = useSelector(getAllBookings);
 
-  useBooking(fetchParams, setBooking, setLoading);
+  useBooking(fetchParams, setLoading);
 
   const handleStatus = (status) => {
     setFetchParams((prev) => ({
@@ -57,22 +59,20 @@ const Booking = () => {
         </div>
       </div>
 
-      <table className="w-full bg-white border border-gray-400 rounded-full text-[14px]">
-        {loading ? (
-          <>
-            <TableHead />
-            <tbody>
-              {booking.map((booking) => (
-                <TableBody booking={booking} />
-              ))}
-            </tbody>
-          </>
-        ) : (
-          <div className="flex justify-center items-center">
-            <img src={load} className="h-[100px] w-[100px]" alt="" />
-          </div>
-        )}
-      </table>
+      {loading ? (
+        <table className="w-full bg-white border border-gray-400 rounded-full text-[14px]">
+          <TableHead />
+          <tbody>
+            {booking?.map((booking) => (
+              <TableBody key={booking.id} booking={booking} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="flex justify-center items-center">
+          <img src={load} className="h-[100px] w-[100px]" alt="Loading" />
+        </div>
+      )}
     </div>
   );
 };
