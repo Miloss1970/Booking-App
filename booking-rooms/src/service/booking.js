@@ -5,7 +5,7 @@ export const fetchBooking = async (fetchData) => {
   let query = supabase
     .from("bookings")
     .select(
-      "id, created_at, startDate, endDate, status, totalPrice, cabines(name, regularPrice), guests(full_name, email)",
+      "id, created_at, startDate, endDate, status, totalPrice,hasBreakfast,isPaid,numGuests,cabines(name, regularPrice), guests(full_name, email,countryFlag)",
       { count: "exact" }
     );
 
@@ -36,14 +36,45 @@ export const fetchBooking = async (fetchData) => {
   return data;
 };
 
-export const getSingeBookig = async (id) => {
+// export const getSingeBookig = async (id) => {
+//   const { data, error } = await supabase
+//     .from("bookings")
+//     .select(
+//       "id, created_at, startDate, endDate, status, totalPrice, numGuests,hasBreakfast,isPaid,cabines(name, regularPrice), guests(full_name, email,countryFlag)",
+//       { count: "exact" }
+//     )
+//     .eq("id", id)
+//     .single();
+
+//   if (error) return error;
+
+//   return data;
+// };
+
+export const fetchSettings = async () => {
+  const { data, error } = await supabase.from("settings").select("*");
+
+  if (error) return error;
+
+  return data;
+};
+
+export const updateBookingField = async (id, field, value) => {
   const { data, error } = await supabase
     .from("bookings")
-    .select(
-      "id, created_at, startDate, endDate, status, totalPrice, numGuests,hasBreakfast,isPaid,cabines(name, regularPrice), guests(full_name, email,countryFlag)",
-      { count: "exact" }
-    )
-    .eq("id", id)
+    .update({ [field]: value })
+    .eq("id", id);
+
+  if (error) return error;
+
+  return data;
+};
+
+export const updateSettings = async (settings) => {
+  const { data, error } = await supabase
+    .from("settings")
+    .update(settings)
+    .eq("id", 1)
     .single();
 
   if (error) return error;
